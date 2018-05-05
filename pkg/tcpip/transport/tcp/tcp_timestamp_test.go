@@ -99,7 +99,7 @@ func TestTimeStampEnabledConnect(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Unexpected error from Read: %v", err)
 		}
-		if want := data; bytes.Compare(got, want) != 0 {
+		if want := data; !bytes.Equal(got, want) {
 			t.Fatalf("Data is different: got: %v, want: %v", got, want)
 		}
 	}
@@ -300,7 +300,7 @@ func TestSegmentDropWhenTimestampMissing(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unexpected error from Read: %v", err)
 	}
-	if want := data; bytes.Compare(got, want) != 0 {
+	if want := data; !bytes.Equal(got, want) {
 		t.Fatalf("Data is different: got: %v, want: %v", got, want)
 	}
 }

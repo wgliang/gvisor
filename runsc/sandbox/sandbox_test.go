@@ -116,7 +116,7 @@ func uniqueSandboxID() string {
 // waitForProcessList waits for the given process list to show up in the sandbox.
 func waitForProcessList(s *sandbox.Sandbox, expected []*control.Process) error {
 	var got []*control.Process
-	for start := time.Now(); time.Now().Sub(start) < 10*time.Second; {
+	for start := time.Now(); time.Since(start) < 10*time.Second; {
 		var err error
 		got, err := s.Processes()
 		if err != nil {

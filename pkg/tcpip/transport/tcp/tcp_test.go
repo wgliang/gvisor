@@ -174,7 +174,7 @@ func TestSimpleReceive(t *testing.T) {
 		t.Fatalf("Unexpected error from Read: %v", err)
 	}
 
-	if bytes.Compare(data, v) != 0 {
+	if !bytes.Equal(data, v) {
 		t.Fatalf("Data is different: expected %v, got %v", data, v)
 	}
 
@@ -261,7 +261,7 @@ func TestOutOfOrderReceive(t *testing.T) {
 	}
 
 	// Check that we received the data in proper order.
-	if bytes.Compare(data, read) != 0 {
+	if !bytes.Equal(data, read) {
 		t.Fatalf("Data is different: expected %v, got %v", data, read)
 	}
 
@@ -454,7 +454,7 @@ func TestFullWindowReceive(t *testing.T) {
 		t.Fatalf("Unexpected error from Read: %v", err)
 	}
 
-	if bytes.Compare(data, v) != 0 {
+	if !bytes.Equal(data, v) {
 		t.Fatalf("Data is different: expected %v, got %v", data, v)
 	}
 
@@ -559,7 +559,7 @@ func TestNoWindowShrinking(t *testing.T) {
 		read = append(read, v...)
 	}
 
-	if bytes.Compare(data, read) != 0 {
+	if !bytes.Equal(data, read) {
 		t.Fatalf("Data is different: expected %v, got %v", data, read)
 	}
 
@@ -602,7 +602,7 @@ func TestSimpleSend(t *testing.T) {
 		),
 	)
 
-	if p := b[header.IPv4MinimumSize+header.TCPMinimumSize:]; bytes.Compare(data, p) != 0 {
+	if p := b[header.IPv4MinimumSize+header.TCPMinimumSize:]; !bytes.Equal(data, p) {
 		t.Fatalf("Data is different: expected %v, got %v", data, p)
 	}
 
@@ -657,7 +657,7 @@ func TestZeroWindowSend(t *testing.T) {
 		),
 	)
 
-	if p := b[header.IPv4MinimumSize+header.TCPMinimumSize:]; bytes.Compare(data, p) != 0 {
+	if p := b[header.IPv4MinimumSize+header.TCPMinimumSize:]; !bytes.Equal(data, p) {
 		t.Fatalf("Data is different: expected %v, got %v", data, p)
 	}
 
@@ -1004,7 +1004,7 @@ func testBrokenUpWrite(t *testing.T, c *context.Context, maxPayload int) {
 		)
 
 		pdata := data[bytesReceived : bytesReceived+payloadLen]
-		if p := tcp.Payload(); bytes.Compare(pdata, p) != 0 {
+		if p := tcp.Payload(); !bytes.Equal(pdata, p) {
 			t.Fatalf("Data is different: expected %v, got %v", pdata, p)
 		}
 		bytesReceived += payloadLen
@@ -1310,7 +1310,7 @@ func TestCloseListener(t *testing.T) {
 	// Close the listener and measure how long it takes.
 	t0 := time.Now()
 	ep.Close()
-	if diff := time.Now().Sub(t0); diff > 3*time.Second {
+	if diff := time.Since(t0); diff > 3*time.Second {
 		t.Fatalf("Took too long to close: %v", diff)
 	}
 }
@@ -2351,7 +2351,7 @@ func TestReadAfterClosedState(t *testing.T) {
 	}
 
 	peekBuf = peekBuf[:n]
-	if bytes.Compare(data, peekBuf) != 0 {
+	if !bytes.Equal(data, peekBuf) {
 		t.Fatalf("Data is different: expected %v, got %v", data, peekBuf)
 	}
 
@@ -2361,7 +2361,7 @@ func TestReadAfterClosedState(t *testing.T) {
 		t.Fatalf("Unexpected error from Read: %v", err)
 	}
 
-	if bytes.Compare(data, v) != 0 {
+	if !bytes.Equal(data, v) {
 		t.Fatalf("Data is different: expected %v, got %v", data, v)
 	}
 
@@ -2649,7 +2649,7 @@ func TestSelfConnect(t *testing.T) {
 		}
 	}
 
-	if bytes.Compare(data, rd) != 0 {
+	if !bytes.Equal(data, rd) {
 		t.Fatalf("Data is different: want=%v, got=%v", data, rd)
 	}
 }
