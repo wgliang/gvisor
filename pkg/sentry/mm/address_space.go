@@ -160,7 +160,7 @@ func (mm *MemoryManager) mapASLocked(pseg pmaIterator, ar usermem.AddrRange, pre
 	// is no cost to mapping more of a pma than necessary.
 	mapAR := usermem.AddrRange{0, ^usermem.Addr(usermem.PageSize - 1)}
 	if precommit {
-		// When explicitly precommitting, only map ar, since overmapping may
+		// When explicitly precommitting, only map ar, since overlapping may
 		// incur unexpected resource usage.
 		mapAR = ar
 	} else if mapUnit := mm.p.MapUnit(); mapUnit != 0 {

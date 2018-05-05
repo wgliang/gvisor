@@ -85,7 +85,7 @@ func openPath(ctx context.Context, mm *fs.MountNamespace, root, wd *fs.Dirent, m
 
 	// No exec-ing directories, pipes, etc!
 	if !fs.IsRegular(d.Inode.StableAttr) {
-		ctx.Infof("Error regularing %s: %v", name, d.Inode.StableAttr)
+		ctx.Infof("Error regulating %s: %v", name, d.Inode.StableAttr)
 		return nil, nil, syserror.EACCES
 	}
 
@@ -118,7 +118,7 @@ func allocStack(ctx context.Context, m *mm.MemoryManager, a arch.Context) (*arch
 
 const (
 	// maxLoaderAttempts is the maximum number of attempts to try to load
-	// an interpreter scripts, to prevent loops. 6 (inital + 5 changes) is
+	// an interpreter scripts, to prevent loops. 6 (initial + 5 changes) is
 	// what the Linux kernel allows (fs/exec.c:search_binary_handler).
 	maxLoaderAttempts = 6
 )
